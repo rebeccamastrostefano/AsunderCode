@@ -18,27 +18,18 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 	virtual void OnConstruction(const FTransform &Transform) override;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Split Line")
-	int32 NumSplinePoints = 10;
-
-	UPROPERTY(EditAnywhere, Category = "Split Line")
-	UStaticMesh *SegmentMesh;
-	
-	UPROPERTY(EditAnywhere, Category = "Split Line")
-	UMaterialInterface *SegmentMaterial;
 	
 	UPROPERTY(EditAnywhere, Category = "Split Line")
 	UMaterialParameterCollection *MaterialParameterCollection;
 
 	UPROPERTY(EditAnywhere, Category = "Split Line")
-	float ColliderWidth = 5000.0f; // How wide across the world (X axis)
+	float ColliderWidth = 5000.0f; // How wide should the collider be
 
 	UPROPERTY(EditAnywhere, Category = "Split Line")
-	float ColliderThickness = 10.0f; // How thick the wall is (YZ plane)
+	float ColliderThickness = 10.0f; // How thick the collider is
 
 	UPROPERTY(EditAnywhere, Category = "Split Line")
-	float ColliderHeight = 2000.0f; // Vertical height of the wall
+	float ColliderHeight = 2000.0f; // How heigh the collider is
 
 protected:
 	virtual void BeginPlay() override;
@@ -51,19 +42,15 @@ private:
 	AActor *Player2;
 
 	UPROPERTY()
-	USplineComponent *Spline;
-
-	UPROPERTY()
 	UBoxComponent *SplitCollider;
 
 	UPROPERTY()
-	bool bIsFrozen = false;
+	bool bIsFrozen = false; //TODO: implement ability to freeze the split in place for a certain time period
 
 	UPROPERTY()
 	TArray<USplineMeshComponent *> MeshSegments;
 
-	void UpdateSpline();
-	void UpdateSplineMeshes();
+	void UpdateSplitCollider();
 	void GetPlayers();
 	void SendParametersToMaterial(FVector Player1Pos, FVector Player2Pos);
 };
